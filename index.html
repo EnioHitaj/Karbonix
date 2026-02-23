@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aspiratori AirPure — Projekt Inxhinierik</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #08090c;
+        --surface: #10131a;
+        --surface2: #161b26;
+        --border: #1e2535;
+        --accent: #00d4ff;
+        --accent2: #00ff99;
+        --text: #e8edf5;
+        --muted: #6b7a99;
+        --card-glow: 0 0 40px rgba(0, 212, 255, 0.06);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 300;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+        background-size: 48px 48px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+        animation: drift 12s ease-in-out infinite alternate;
+      }
+      .orb-1 {
+        width: 600px;
+        height: 600px;
+        background: rgba(0, 212, 255, 0.07);
+        top: -200px;
+        left: -150px;
+      }
+      .orb-2 {
+        width: 500px;
+        height: 500px;
+        background: rgba(0, 255, 153, 0.05);
+        bottom: -150px;
+        right: -100px;
+        animation-delay: -6s;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(30px, 20px);
+        }
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 32px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── HEADER ── */
+      header {
+        padding: 50px 0 0;
+        text-align: center;
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        padding: 6px 16px;
+        border-radius: 100px;
+        margin-bottom: 28px;
+        animation: fadeUp 0.6s ease both;
+      }
+
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        animation: fadeUp 0.7s 0.1s ease both;
+      }
+
+      h1 span {
+        background: linear-gradient(120deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        margin-top: 20px;
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 580px;
+        margin-inline: auto;
+        animation: fadeUp 0.7s 0.2s ease both;
+      }
+
+      /* ── DIVIDER ── */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 60px 0 48px;
+      }
+      .divider-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .divider-label {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ── ABOUT ── */
+      .about-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px 48px;
+        box-shadow: var(--card-glow);
+        position: relative;
+        overflow: hidden;
+        animation: fadeUp 0.7s 0.35s ease both;
+      }
+      .about-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+      }
+      .about-card h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+      .about-card p {
+        color: #9aa5bf;
+        font-size: 1rem;
+      }
+
+      /* ── IMAGES ── */
+      .images-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin: 48px 0;
+        animation: fadeUp 0.7s 0.4s ease both;
+      }
+
+      .image-slot {
+        aspect-ratio: 4/3;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .image-slot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s ease;
+      }
+
+      .image-slot:hover img {
+        transform: scale(1.04);
+      }
+
+      .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(8, 9, 12, 0.85) 0%,
+          transparent 55%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 24px;
+      }
+
+      .image-overlay .img-label {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+
+      .image-overlay .img-caption {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      /* ── COMPONENTS ── */
+      .section-title {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 32px;
+      }
+      .section-title span {
+        color: var(--accent);
+      }
+
+      .components-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .comp-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        transition:
+          border-color 0.3s,
+          transform 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .comp-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .comp-card:hover {
+        border-color: rgba(0, 212, 255, 0.4);
+        transform: translateY(-4px) !important;
+        box-shadow: 0 12px 40px rgba(0, 212, 255, 0.08);
+      }
+      .comp-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .comp-card:hover::after {
+        opacity: 1;
+      }
+
+      .comp-number {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      .comp-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(0, 212, 255, 0.07);
+        border: 1px solid rgba(0, 212, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        font-size: 20px;
+      }
+
+      .comp-card h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--text);
+      }
+
+      .comp-card p {
+        font-size: 0.875rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        text-align: center;
+        padding: 60px 0 40px;
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+      footer strong {
+        color: var(--accent);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .images-grid {
+          grid-template-columns: 1fr;
+        }
+        .about-card {
+          padding: 28px 24px;
+        }
+        h1 {
+          font-size: 2.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+      <!-- HEADER -->
+      <header>
+        <div class="tag">
+          Lënda e Kimisë — Projekti për "Festivalin e Shkencave — 2026"
+        </div>
+        <h1>Aspiratori<br /><span>Karbonix</span></h1>
+        <p class="subtitle">
+          Një sistem inteligjent i pastrimit të ajrit, ndërtuar me Arduino, dy
+          sensorë gazi dhe filtrim aktiv — projektuar për të monitoruar dhe
+          përmirësuar cilësinë e ajrit në kohë reale.
+        </p>
+      </header>
+
+      <!-- DIVIDER -->
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-label">Rreth Projektit</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="about-card">
+        <h2>Çfarë është Aspiratori Karbonix?</h2>
+        <p>
+          Aspiratori ynë është një pajisje e plotë për cilësinë e ajrit që thith
+          ajrin e ambientit nëpërmjet një turbine, e kalon atë nëpër gur
+          gëlqeror dhe filtra fizikë për të neutralizuar ndotësit, dhe monitoron
+          vazhdimisht përqendrimet e gazit duke përdorur dy sensorë MQ135. Të
+          gjitha leximet shfaqen në kohë reale në ekranin LCD 16×2, ndërkohë që
+          Arduino UNO koordinon çdo elementë i fuqizuar nga një bateri kompakte.
+        </p>
+      </div>
+
+      <!-- IMAGES -->
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-label">Galeria e Projektit</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="images-grid">
+        <div class="image-slot">
+          <img
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80"
+            alt="Fotografi e projektit 1"
+            src=""
+          />
+          <div class="image-overlay">
+            <span class="img-label">Foto 01</span>
+            <span class="img-caption">Pamja e Projektit</span>
+          </div>
+        </div>
+
+        <div class="image-slot">
+          <img
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80"
+            alt="Fotografi e projektit 2"
+            src=""
+          />
+          <div class="image-overlay">
+            <span class="img-label">Foto 02</span>
+            <span class="img-caption">Detajet Teknike</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPONENTS -->
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-label">Elementët</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <h2 class="section-title">Ndërtuar me <span>precizion.</span></h2>
+
+      <div class="components-grid">
+        <div class="comp-card">
+          <span class="comp-number">01 </span>
+          <div class="comp-icon">🔋</div>
+          <h3>Bateria</h3>
+          <p>
+            Siguron energji të qëndrueshme DC të gjithë sistemit. Bateria
+            garanton që aspiratori të funksionojë në mënyrë të pavarur nga
+            rrjeti elektrik, duke e bërë atë të lëvizshëm dhe të gatshëm për
+            përdorim në terren pa kabllo të jashtme.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">02</span>
+          <div class="comp-icon">🖥️</div>
+          <h3>Arduino UNO</h3>
+          <p>
+            Një pllakë mikrokontrolleri e bazuar në ATmega328P. Përdoret për të
+            kontrolluar dhe programuar të gjithë komponentët e tjerë.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">03</span>
+          <div class="comp-icon">🌀</div>
+          <h3>Turbina</h3>
+          <p>
+            Krijon presionin negativ të nevojshëm për të tërhequr ajrin nëpër
+            trup të aspiratorit. Ajri hyn nëpërmjet hapjes, kalon nëpër fazat e
+            filtrimit dhe del i pastruar.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">04 </span>
+          <div class="comp-icon">🔩</div>
+          <h3>Tuba</h3>
+          <p>
+            Lidhin fazat e ndryshme të aspiratorit — nga hyrja e ajrit deri te
+            dhoma e filtrimit dhe nëpërmjet daljes. Tuba janë të rreshtuar për
+            të maksimizuar kohën e kontaktit midis ajrit hyrës dhe materialeve
+            filtruese, duke siguruar pastrim efektiv.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">05 </span>
+          <div class="comp-icon">📡</div>
+          <h3>Sensorë Gazi MQ135 × 2</h3>
+          <p>
+            Dy sensorë MQ135 përdoren për matjen e cilësisë së ajrit për të
+            monitoruar nivelin e CO2 në hyrje dhe dalje.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">06</span>
+          <div class="comp-icon">📺</div>
+          <h3>Ekrani LCD 16×2</h3>
+          <p>
+            Ekran me 16 karaktere në 2 rreshta. Përdoret për të shfaqur tekst si
+            ora, data, mesazhe ose informacione të tjera nga sistemi.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">07 </span>
+          <div class="comp-icon">⚡</div>
+          <h3>Breadboard</h3>
+          <p>
+            Pllakë eksperimentimi pa saldim. Përdoret për të lidhur përkohësisht
+            komponentët me tela për testim dhe zhvillim.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">08 </span>
+          <div class="comp-icon">🔌</div>
+          <h3>Kabllo Lidhëse (Jumper)</h3>
+          <p>
+            Kabllot jumper mashkull-mashkull dhe mashkull-femër ndërlidhin të
+            gjithë komponentët në breadboard dhe me Arduino UNO. Ato
+            transportojnë linjat e energjisë, tokëzimit dhe sinjalit nëpër qark,
+            duke e mbajtur ndërtimin të organizuar dhe të lehtë për t'u
+            gjurmuar.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">09 </span>
+          <div class="comp-icon">🌿</div>
+          <h3>Filtrat</h3>
+          <p>
+            Materialet filtruese fizike kapin grimcat e ngurta — pluhur, polenin
+            dhe grimcat e imëta — përpara se ajri të arrijë fazën e filtrimit
+            kimik. Gjithashtu mbrojnë sensorët nga bllokimi me mbetje me kalimin
+            e kohës.
+          </p>
+        </div>
+
+        <div class="comp-card">
+          <span class="comp-number">10 </span>
+          <div class="comp-icon">🪨</div>
+          <h3>Guri Gëlqeror (CaCO₃)</h3>
+          <p>
+            Një mineral natyral alkalin i përdorur si medium filtrimi kimik.
+            Ndërsa ajri kalon nëpër shtresën e gurit gëlqeror, gazrat acidike si
+            CO₂ dhe SO₂ reagojnë me karbonatin e kalciumit, duke i neutralizuar
+            ato nëpërmjet një procesi kimik natyral me kosto të ulët.
+          </p>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>
+        <p>KARBONIX</p>
+        <p>
+          Karbonix SISTEM I NDËRTUAR NGA NXËNËSIT: Enio Hitaj, Brandon Cobo,
+          Sonja Likaj, Joana Nelaj, Enxhi Petanaj
+        </p>
+        <p>MËSUESI KOORDINATOR: Prs. Klodiana Xhelili</p>
+      </footer>
+    </div>
+
+    <script>
+      // Scroll animation for component cards
+      const cards = document.querySelectorAll(".comp-card");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                entry.target.classList.add("visible");
+              }, entry.target.dataset.delay || 0);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      cards.forEach((card, i) => {
+        card.dataset.delay = i * 60;
+        observer.observe(card);
+      });
+    </script>
+  </body>
+</html>
